@@ -173,7 +173,7 @@
       height: 100%;
       display: flex;
       flex: 0.3;
-      align-items: flex-end;
+      align-items: center;
       justify-content: center;
       border-top-left-radius: 1rem;
       border-bottom-left-radius: 1rem;
@@ -323,9 +323,9 @@
             align-items: center;
             justify-content: center;
             gap: 3px;
-            top: -12px;
+            top: -14px;
             position: absolute;
-            padding: 0px 5px;
+            padding: 0px 4px;
 
             left: 5%;
             color: rgb(199, 197, 197);

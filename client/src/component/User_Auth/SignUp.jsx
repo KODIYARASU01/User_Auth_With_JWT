@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignUp.scss";
-import signup from "../../assets/User_Auth/register2.svg";
+import signup from "../../assets/User_Auth/register.svg";
 import brand from "../../assets/User_Auth/brand.png";
 import profile_logo from "../../assets/User_Auth/profile.png";
 import illustration from "../../assets/User_Auth/register_illustrator.svg";
@@ -41,7 +41,6 @@ const SignUp = () => {
 
     setProfile(base64);
   };
-
   //Password Show hide :
   let handleShow = () => {
     let password = document.getElementById("password");
@@ -52,7 +51,74 @@ const SignUp = () => {
         : password.setAttribute("type", "password");
     }
   };
+//Register user submition:
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoader(true);
+    let data = {
+      profile,
+      firstName,
+      lastName,
+      email,
+      password,
+      mobileNumber,
+    };
+    try {
+      axios
+        .post("http://localhost:3001/auth/register", data)
+        .then((response) => {
+          toast.success(response.data.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Flip,
+          });
 
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+          setLoader(false);
+        })
+        .catch((error) => {
+          setProfile(null);
+          setFirstName('');
+          setLastName("");
+          setEmail("");
+          setPassword("");
+          setMobileNumber("")
+          toast.error(error.response.data.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Flip,
+          });
+          setLoader(false);
+        });
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Flip,
+      });
+      setLoader(false);
+    }
+  };
   return (
     <>
       <div className="signup_container">
@@ -69,7 +135,7 @@ const SignUp = () => {
           <p>User Authentication With JWT</p>
           <i
             className="bx bxl-sketch bx-burst bx-flip-horizontal"
-            style={{ color: "#564ce2" }}
+            style={{ color: "#000" }}
           ></i>
         </div>
         <div className="box_container">
@@ -81,25 +147,25 @@ const SignUp = () => {
             <div className="illustration">
               {/* <img src={illustration} alt="illustration" /> */}
             </div>
-         
-            <form action="">
-            <div className="profile">
-              <label htmlFor="profile">
-                <img
-                  src={profile || profile_logo}
-                  alt="avatar"
-                  id="profile_image"
+
+            <form action="" onSubmit={handleSubmit}>
+              <div className="profile">
+                <label htmlFor="profile">
+                  <img
+                    src={profile || profile_logo}
+                    alt="avatar"
+                    id="profile_image"
+                  />
+                  <i className="bx bxs-chevrons-left bx-flashing"></i>
+                  <span>Upload your profile</span>
+                </label>
+                <input
+                  onChange={onUpload}
+                  type="file"
+                  id="profile"
+                  name="profile"
                 />
-                <i className='bx bxs-chevrons-left bx-flashing' ></i>
-                <span>Upload your profile</span>
-              </label>
-              <input
-                onChange={onUpload}
-                type="file"
-                id="profile"
-                name="profile"
-              />
-            </div>
+              </div>
               {/* //First Name */}
               <div className="form_group">
                 <label htmlFor="userName">

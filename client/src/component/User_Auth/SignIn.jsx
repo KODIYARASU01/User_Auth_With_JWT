@@ -61,7 +61,7 @@ const SignIn = () => {
 
           <i
             className="bx bxl-sketch bx-burst bx-flip-horizontal"
-            style={{ color: "#564ce2" }}
+            style={{ color: "#000" }}
           ></i>
         </div>
         <div className="box_container">

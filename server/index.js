@@ -8,9 +8,11 @@ import cors from "cors";
 import AuthRoutes from "./Routes/Register.route.js";
 //Configire DotEnv Configuration :
 dotenv.config();
+
 //App initialized :s
 let app = express();
 //Accept json type data send to server:
+app.use(cors());
 app.use(express.json({ limit: "30mb" }));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
@@ -25,7 +27,6 @@ app.use("/auth", AuthRoutes);
 app.get("/", (req, res) => {
   res.send("server is running Sucessfully");
 });
-
 //MongoDB Conncetion established:
 mongoose
   .connect(mongodb_uri)
