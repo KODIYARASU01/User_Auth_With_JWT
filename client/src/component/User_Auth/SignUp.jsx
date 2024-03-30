@@ -62,7 +62,7 @@ const SignUp = () => {
     };
     try {
       axios
-        .post("http://localhost:3001/auth/register", data)
+        .post("https://user-auth-with-jwt.onrender.com/auth/register", data)
         .then((response) => {
           toast.success(response.data.message, {
             position: "top-right",

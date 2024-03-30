@@ -40,7 +40,7 @@ const UserDetail = () => {
 
   //   axios
   //     .get(
-  //       `http://localhost:3001/userData/${id.id}`,
+  //       `https://user-auth-with-jwt.onrender.com/userData/${id.id}`,
   //       {
   //         headers: {
   //           Authorization: `Bearer ${id.token}`,
@@ -93,7 +93,7 @@ const UserDetail = () => {
   useEffect(() => {
     setLoader(true)
     axios
-      .get(`http://localhost:3001/auth/register/${UserData.id}`)
+      .get(`https://user-auth-with-jwt.onrender.com/auth/register/${UserData.id}`)
       .then((responce) => {
         setProfile(responce.data.data.profile);
         setFirstName(responce.data.data.firstName);
@@ -159,7 +159,7 @@ const UserDetail = () => {
         mobileNumber,
       };
       axios
-        .put(`http://localhost:3001/auth/register/${UserData.id}`, data)
+        .put(`https://user-auth-with-jwt.onrender.com/auth/register/${UserData.id}`, data)
         .then((res) => {
           toast.success(res.data.message, {
             position: "top-right",
