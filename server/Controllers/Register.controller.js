@@ -1,8 +1,8 @@
-import RegisterUser from "../Models/Register.model.js";
+import UserAuth from "../Models/Register.model.js";
 import bcryptjs from "bcrypt";
 import jwt from "jsonwebtoken";
 //Post data to mongodb -- > Register User  :
-export const CreateUser = async (req, res) => {
+export const RegisterUser = async (req, res) => {
   try {
     //Get all those field data from body:
     let { profile, email, password, firstName, lastName, mobileNumber } =
@@ -12,7 +12,7 @@ export const CreateUser = async (req, res) => {
       res.status(400).json({ message: "Fill all those * fields" });
     }
     //Find user Already Exist with this email or not
-    let findUser = await RegisterUser.findOne({ email: email });
+    let findUser = await UserAuth.findOne({ email: email });
     //If exist through on error
     if (findUser) {
       res.status(400).json({ message: "User Already Exist with this email" });
@@ -28,7 +28,7 @@ export const CreateUser = async (req, res) => {
         mobileNumber,
       };
       //If doesn't exist created new user data to database:
-      let createUser = await RegisterUser.create(data);
+      let createUser = await UserAuth.create(data);
       res.status(201).json({
         message: "User Registered Sucessfully",
         data: {
@@ -56,7 +56,7 @@ export const LoginUser = async (req, res) => {
       res.status(400).json({ message: "Fill all those * fields" });
     }
     //Checking for already this email exist or not:
-    let checkUser = await RegisterUser.findOne({ email });
+    let checkUser = await UserAuth.findOne({ email });
     if (!checkUser) {
       res.status(400).json({ message: "User Doesn't Exist" });
     } else {

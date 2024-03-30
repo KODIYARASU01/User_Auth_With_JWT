@@ -1,10 +1,10 @@
 import express from 'express';
-import { CreateUser,LoginUser } from '../Controllers/Register.controller.js';
+import { RegisterUser,LoginUser } from '../Controllers/Register.controller.js';
 
 let router=express.Router();
 
 
-router.post('/register',CreateUser);
+router.post('/register',RegisterUser);
 router.post('/login',LoginUser)
 
 export default router;

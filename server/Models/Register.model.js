@@ -32,6 +32,6 @@ let RegisterSchema = new mongoose.Schema(
 
 
 
-let RegisterUser=mongoose.model('RegisterUser',RegisterSchema);
+let UserAuth=mongoose.model('UserAuth',RegisterSchema);
 
-export default RegisterUser;
+export default UserAuth;
