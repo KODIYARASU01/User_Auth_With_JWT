@@ -6,7 +6,7 @@ import brand from "../../assets/User_Auth/brand.png";
 import profile_logo from "../../assets/User_Auth/profile.png";
 import illustration from "../../assets/User_Auth/register_illustrator.svg";
 import axios from "axios";
-import { convertToBase64 } from "../Helper/Convert.js";
+import {convertToBase64 } from "../Helper/Convert.js";
 import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import formContext from "../Context/FormContext.jsx";
@@ -22,8 +22,6 @@ const SignUp = () => {
     setFirstName,
     lastName,
     setLastName,
-    location,
-    setLocation,
     mobileNumber,
     setMobileNumber,
     email,
@@ -32,8 +30,7 @@ const SignUp = () => {
     setPassword,
     loader,
     setLoader,
-    UserDetails,
-    setUserDetails,
+
   } = useContext(formContext);
   //Formik does not support file upload so we could create handler :
   const onUpload = async (e) => {
@@ -78,19 +75,20 @@ const SignUp = () => {
             theme: "light",
             transition: Flip,
           });
-
+          setPassword('');
+          setFirstName('');
+          setLastName("");
+          setEmail("");
+          setPassword("");
+          setMobileNumber("")
+          setProfile(undefined)
           setTimeout(() => {
             navigate("/");
           }, 2000);
           setLoader(false);
         })
         .catch((error) => {
-          setProfile(null);
-          setFirstName('');
-          setLastName("");
-          setEmail("");
-          setPassword("");
-          setMobileNumber("")
+
           toast.error(error.response.data.message, {
             position: "top-right",
             autoClose: 2000,
@@ -102,6 +100,7 @@ const SignUp = () => {
             theme: "light",
             transition: Flip,
           });
+        
           setLoader(false);
         });
     } catch (error) {

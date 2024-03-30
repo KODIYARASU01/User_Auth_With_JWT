@@ -10,20 +10,11 @@ import { useContext } from "react";
 import formContext from "../Context/FormContext";
 const SignIn = () => {
   let {
-    user,
-    setUser,
-    profileView,
-    setProfileView,
     show,
     setShow,
-    profile,
     setProfile,
-    firstName,
     setFirstName,
-    lastName,
     setLastName,
-    location,
-    mobileNumber,
     setMobileNumber,
     email,
     setEmail,
@@ -43,7 +34,79 @@ const SignIn = () => {
         : password.setAttribute("type", "password");
     }
   };
+  //Login user submition:
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoader(true);
+    let data = {
+      email,
+      password,
+    };
+    try {
+      axios
+        .post("http://localhost:3001/auth/login", data)
+        .then((response) => {
+          const datas = JSON.stringify({
+            token: response?.data?.token,
+            id: response?.data?.id,
+          });
+          localStorage.setItem("datas", datas);
 
+          let GetUserId = JSON.parse(localStorage.getItem("datas"));
+          toast.success(response.data.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Flip,
+          });
+
+          setEmail("");
+          setPassword("");
+          setTimeout(() => {
+            navigate(`/user/${GetUserId.id}`);
+          }, 2000);
+          setLoader(false);
+        })
+        .catch((error) => {
+          setProfile(null);
+          setFirstName("");
+          setLastName("");
+          setEmail("");
+          setPassword("");
+          setMobileNumber("");
+          toast.error(error.response.data.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Flip,
+          });
+          setLoader(false);
+        });
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Flip,
+      });
+      setLoader(false);
+    }
+  };
   return (
     <>
       <div className="signin_container">
@@ -73,7 +136,7 @@ const SignIn = () => {
               <h4>Welcome Back!</h4>
               <p>Please enter login details below</p>
             </div>
-            <form action="">
+            <form action="" onSubmit={handleSubmit}>
               <div className="form_group">
                 <label htmlFor="email">
                   Email{" "}

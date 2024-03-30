@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./UserDetail.scss";
-import { useNavigate, Link } from "react-router-dom";
-import signup from "../../assets/User_Auth/register3.jpg";
+import { useNavigate, Link, useParams } from "react-router-dom";
+import signup from "../../assets/UserUpdate_Pannel/update1.jpg";
 import brand from "../../assets/User_Auth/brand.png";
-import illustration from "../../assets/Background/register_illustrator.svg";
+// import illustration from "../../assets/Background/register_illustrator.svg";s
 import axios from "axios";
 import profile_logo from "../../assets/User_Auth/profile.png";
 import { convertToBase64 } from "../Helper/Convert";
@@ -14,12 +14,8 @@ import { useContext } from "react";
 import formContext from "../Context/FormContext";
 const UserDetail = () => {
   let {
-    UserDetails,
-    setUserDetails,
     user,
     setUser,
-    profileView,
-    setProfileView,
     show,
     setShow,
     profile,
@@ -34,8 +30,6 @@ const UserDetail = () => {
     setMobileNumber,
     email,
     setEmail,
-    password,
-    setPassword,
     loader,
     setLoader,
   } = useContext(formContext);
@@ -92,7 +86,49 @@ const UserDetail = () => {
   //     });
   // }, []);
   let navigate = useNavigate();
+  let { id } = useParams();
+  let UserData = JSON.parse(localStorage.getItem("datas"));
 
+  //Fetching user Data:
+  useEffect(() => {
+    setLoader(true)
+    axios
+      .get(`http://localhost:3001/auth/register/${UserData.id}`)
+      .then((responce) => {
+        setProfile(responce.data.data.profile);
+        setFirstName(responce.data.data.firstName);
+        setLastName(responce.data.data.lastName);
+        setEmail(responce.data.data.email);
+        setMobileNumber(responce.data.data.mobileNumber);
+        setLocation(responce.data.data.location)
+        toast.success(responce.data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Flip,
+        });
+        setLoader(false)
+      })
+      .catch((error) => {
+     setLoader(false)
+        toast.error(error.response.data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Flip,
+        });
+      });
+  }, []);
   //Formik does not support file upload so we could create handler :
   const onUpload = async (e) => {
     let base64 = await convertToBase64(e.target.files[0]);
@@ -114,29 +150,17 @@ const UserDetail = () => {
     e.preventDefault();
     try {
       setLoader(true);
-      const token = JSON.parse(localStorage.getItem("token"));
-
       let data = {
         profile,
         firstName,
         lastName,
         email,
-        password,
         location,
         mobileNumber,
       };
       axios
-        .put(
-          `http://localhost:3001/userData/${token.id}`,
-          data,
-          {
-            headers: {
-              Authorization: `Bearer ${token.token}`,
-            },
-          }
-        )
+        .put(`http://localhost:3001/auth/register/${UserData.id}`, data)
         .then((res) => {
-          console.log(res.data);
           toast.success(res.data.message, {
             position: "top-right",
             autoClose: 2000,
@@ -151,7 +175,7 @@ const UserDetail = () => {
           setLoader(false);
         })
         .catch((error) => {
-          console.log(error.message);
+          console.log(error);
           toast.error(error.response.data.message, {
             position: "top-right",
             autoClose: 2000,
@@ -167,13 +191,14 @@ const UserDetail = () => {
         });
     } catch (error) {
       console.log(error.message);
+      setLoader(false)
     }
   };
   //LogOut user
   let handleLogOut = async (e) => {
     e.preventDefault();
     try {
-      localStorage.removeItem("token");
+      localStorage.removeItem("datas");
 
       toast.success("LogOut Sucessfully", {
         position: "top-right",
@@ -186,6 +211,11 @@ const UserDetail = () => {
         theme: "light",
         transition: Flip,
       });
+
+      setEmail('')
+      setMobileNumber('')
+      setLastName('')
+      setFirstName('')
       setTimeout(() => {
         setUser(null);
         navigate("/");
@@ -215,9 +245,9 @@ const UserDetail = () => {
           theme="light"
         />
         <div className="brand_logo">
-          <img src={brand} alt="brand" />
+          {/* <img src={brand} alt="brand" /> */}
 
-          <p>Virtual Card Creations</p>
+          <p>User Authentication With JWT</p>
           <i
             className="bx bxl-sketch bx-burst bx-flip-horizontal"
             style={{ color: "#58dec9" }}
@@ -226,15 +256,23 @@ const UserDetail = () => {
         <div className="box_container">
           <div className="right_form">
             <div className="form_title">
-              {/* <h4>Welcome to AristosTech Digital Card Creator!</h4> */}
-              <p>Update Your Account Details</p>
+              <h4>Your Profile Pannel</h4>
+              <p>Update your Account Details</p>
+            </div>
+            <div className="illustration">
+              {/* <img src={illustration} alt="illustration" /> */}
+            </div>
+
+            <form action="" onSubmit={handleSubmit}>
               <div className="profile">
                 <label htmlFor="profile">
                   <img
-                    src={profile ? profile : profile_logo}
+                    src={profile || profile_logo}
                     alt="avatar"
                     id="profile_image"
                   />
+                  <i className="bx bxs-chevrons-left bx-flashing"></i>
+                  <span>Update your profile</span>
                 </label>
                 <input
                   onChange={onUpload}
@@ -243,11 +281,6 @@ const UserDetail = () => {
                   name="profile"
                 />
               </div>
-            </div>
-            {/* <div className="illustration">
-              <img src={illustration} alt="illustration" />
-            </div> */}
-            <form action="" onSubmit={handleSubmit}>
               {/* //First Name */}
               <div className="form_group">
                 <label htmlFor="userName">
@@ -304,21 +337,6 @@ const UserDetail = () => {
                 </div>
               </div>
 
-              {/* //Location */}
-              <div className="form_group">
-                <label htmlFor="location">Location</label>
-                <input
-                  type="text"
-                  placeholder="Eg : TamilNadu,Chennai"
-                  name="location"
-                  id="location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                />
-                <div className="icon">
-                  <i className="bx bx-current-location bx-rotate-90"></i>
-                </div>
-              </div>
               {/* MobileNumber`` */}
               <div className="form_group">
                 <label htmlFor="lastName">Mobile Number</label>
@@ -334,7 +352,21 @@ const UserDetail = () => {
                   <i className="bx bx-mobile"></i>
                 </div>
               </div>
-
+              {/* Location`` */}
+              <div className="form_group">
+                <label htmlFor="location">Location</label>
+                <input
+                  type="text"
+                  placeholder="Eg : Chennai,TamilNadu"
+                  name="location"
+                  id="location"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                />
+                <div className="icon">
+                <i className='bx bx-current-location'></i>
+                </div>
+              </div>
               <div className="form_submit">
                 <button type="submit">
                   Update Profile
@@ -354,7 +386,10 @@ const UserDetail = () => {
 
             <div className="signup_link">
               <p>
-                Get back later ? <Link onClick={handleLogOut}>Logout</Link>
+                Get Back Soon ?{" "}
+                <Link onClick={handleLogOut} style={{ color: "red" }}>
+                  Logout
+                </Link>
               </p>
             </div>
           </div>

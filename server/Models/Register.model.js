@@ -4,7 +4,7 @@ let RegisterSchema = new mongoose.Schema(
   {
     profile: {
       type: String,
-      default:'https://cdn.vectorstock.com/i/1000x1000/51/87/student-avatar-user-profile-icon-vector-47025187.webp'
+      default:'https://img.freepik.com/free-vector/bearded-man-profile_24908-81067.jpg?t=st=1711814101~exp=1711817701~hmac=e843296aecd64185b4bb0ec5fd1bd4ce00769b401064146757a1f0286dd2b862&w=740'
     },
     firstName: {
       type: String,
@@ -26,6 +26,9 @@ let RegisterSchema = new mongoose.Schema(
     mobileNumber: {
       type: String,
     },
+    location:{
+      type: String,
+    }
   },
   { timestamps: true }
 );

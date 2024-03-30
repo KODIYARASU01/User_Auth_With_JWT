@@ -28,7 +28,8 @@
 .userdetail_container {
   width: 100vw;
   height: 100dvh;
-  background-image: url(../../assets/Background/21.jpg);
+  // background-image: url(../../assets/Background/21.jpg);
+  background: linear-gradient(#9df7c7ce , #fffab9ab);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -98,6 +99,7 @@
     // border-radius: 1rem;
     display: flex;
     align-items: flex-start;
+    border-bottom: 3px solid #fff;
     justify-content: center;
 
     .right_image {
@@ -220,15 +222,17 @@
       flex: 0.7;
       height: 100%;
       padding: 1rem;
+
       //   padding: 0.5rem 1rem;
- 
+
+   
       .form_title {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
         gap: 10px;
-        position: relative;
+
 
         h4 {
           letter-spacing: 1px;
@@ -238,57 +242,22 @@
           font-size: 0.8rem;
           color: rgb(104, 89, 238);
         }
-          // Profile logo
-   .profile {
-    position: absolute;
-    top: -20%;
-    left: 120%;
-    label {
-      #profile_image {
-        min-width: 50px;
-        width: 50px;
-        min-height: 50px;
-        height: 50px;
-        object-fit: cover;
-        object-position: center;
-        border-radius: 50%;
-        border: 2px solid skyblue;
-        cursor: pointer;
-        z-index: 10;
+  
+      }
+      .illustration {
+        position: absolute;
+        right: 8%;
+        top: 15%;
 
-        @media screen and (max-width:700px){
-          min-width: 50px;
-        width: 50px;
-        min-height: 50px;
-        height: 50px;
+        img {
+          width: 200px;
+        }
+
+        @media screen and (max-width: 900px) {
+          display: none;
         }
       }
-    }
-    input[type="file"] {
-      display: none;
-    }
-
-    @media screen and (max-width:900px){
-      position: absolute;
-      top: -50%;
-      right: 60%;
-    }
-  }
-      }
-.illustration{
-  position: absolute;
-  right: 8%;
-  top: 15%;
-
-
-  img{
-    width: 200px;
-  }
-
-  @media screen and (max-width:900px){
-    display: none;
-  }
-}
+          
       form {
         width: 100%;
         position: relative;
@@ -300,8 +269,47 @@
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         grid-column-gap: 2rem;
         grid-row-gap: 0rem;
-        margin: 1rem auto;
+        margin: 0.4rem auto;
+     // Profile logo
+     .profile {
+      margin: 10px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+      margin: 1rem 0.2rem;
 
+      label {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1rem;
+        #profile_image {
+          min-width: 50px;
+          width: 50px;
+          min-height: 50px;
+          height: 50px;
+          object-fit: cover;
+          object-position: center;
+          border-radius: 1rem;
+          border: 2px solid skyblue;
+          cursor: pointer;
+        }
+        span{
+          font-size: 0.7rem;
+          color: gray;
+          font-weight: bold;
+        }
+      }
+      input[type="file"] {
+        display: none;
+      }
+      @media screen and (max-width: 900px) {
+        margin: 0.8rem auto;
+      }
+    }
         .form_group {
           margin: 10px auto;
           display: flex;
@@ -317,10 +325,10 @@
             align-items: center;
             justify-content: center;
             gap: 3px;
-            top: -12px;
+            top: -14px;
             position: absolute;
-            padding: 0px 5px;
-          
+            padding: 0px 4px;
+
             left: 5%;
             color: rgb(199, 197, 197);
             // background: linear-gradient(#000,tomato);
@@ -330,21 +338,20 @@
             background-color: white;
             border-radius: 4px;
 
-            span{
+            span {
               font-size: 1rem;
               color: red !important;
               -webkit-text-fill-color: rgb(255, 31, 31);
-              sup{
+              sup {
                 color: red !important;
               }
-             
             }
-         
+
             @media screen and (max-width: 800px) {
               left: 5%;
             }
           }
-       
+
           input {
             width: 100%;
             padding: 1rem 2rem;
@@ -371,24 +378,21 @@
               border: double 2px transparent;
               border-radius: 0.3rem;
               background-image: linear-gradient(white, white),
-              linear-gradient(to right, rgb(150, 112, 240), rgb(0, 0, 0));
+                linear-gradient(to right, rgb(150, 112, 240), rgb(0, 0, 0));
               background-origin: border-box;
               background-clip: padding-box, border-box;
               transition: all 0.3s ease;
             }
 
-          
-
-          
-
             @media screen and (max-width: 800px) {
               padding: 0.8rem 2rem;
               width: 100%;
               background-image: linear-gradient(white, white),
-              linear-gradient(to right, rgb(131, 168, 247), rgb(32, 97, 236));
+                linear-gradient(to right, rgb(131, 168, 247), rgb(32, 97, 236));
             }
           }
-  
+
+         
           .icon {
             position: absolute;
             left: 2%;
@@ -412,7 +416,7 @@
 
             i {
               font-size: 1.4rem;
-              color: rgb(69, 255, 109);
+              color: skyblue;
               cursor: pointer;
             }
 
@@ -422,7 +426,8 @@
               top: 25%;
             }
           }
-          @media screen and (max-width:900px){
+
+          @media screen and (max-width: 900px) {
             margin: 0.8rem auto;
           }
         }
@@ -483,7 +488,7 @@
         }
         .or {
           width: 50%;
-          grid-column: 1/-1; 
+          grid-column: 1/-1;
           display: flex;
           margin: auto;
           align-items: center;
@@ -627,7 +632,7 @@
       }
     }
 
-    &::-webkit-scrollbar{
+    &::-webkit-scrollbar {
       display: none !important;
     }
     @media screen and (max-width: 800px) {

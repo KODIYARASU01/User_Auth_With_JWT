@@ -98,6 +98,7 @@
     // border-radius: 1rem;
     display: flex;
     align-items: flex-start;
+    border-bottom: 3px solid #fff;
     justify-content: center;
 
     .right_image {
@@ -173,7 +174,7 @@
       height: 100%;
       display: flex;
       flex: 0.3;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
       border-top-left-radius: 1rem;
       border-bottom-left-radius: 1rem;
@@ -659,6 +660,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    background: linear-gradient(#ffffffce , #ffffffab);
   }
 }
 
