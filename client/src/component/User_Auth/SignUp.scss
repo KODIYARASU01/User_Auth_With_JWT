@@ -220,6 +220,7 @@
       flex: 0.7;
       height: 100%;
       padding: 1rem;
+
       //   padding: 0.5rem 1rem;
 
    
@@ -229,7 +230,7 @@
         align-items: flex-start;
         justify-content: flex-start;
         gap: 10px;
-        position: relative;
+
 
         h4 {
           letter-spacing: 1px;
@@ -239,34 +240,7 @@
           font-size: 0.8rem;
           color: rgb(104, 89, 238);
         }
-           // Profile logo
-      .profile {
-        position: absolute;
-        top: 40%;
-        left: 44%;
-
-        label {
-          #profile_image {
-            min-width: 50px;
-            width: 50px;
-            min-height: 50px;
-            height: 50px;
-            object-fit: cover;
-            object-position: center;
-            border-radius: 1rem;
-            border: 2px solid skyblue;
-            cursor: pointer;
-          }
-        }
-        input[type="file"] {
-          display: none;
-        }
-        @media screen and (max-width: 900px) {
-          position: absolute;
-          top: 44%;
-          left: 60%;
-        }
-      }
+  
       }
       .illustration {
         position: absolute;
@@ -281,6 +255,7 @@
           display: none;
         }
       }
+          
       form {
         width: 100%;
         position: relative;
@@ -293,7 +268,46 @@
         grid-column-gap: 2rem;
         grid-row-gap: 0rem;
         margin: 0.4rem auto;
+     // Profile logo
+     .profile {
+      margin: 10px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+      margin: 1rem 0.2rem;
 
+      label {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1rem;
+        #profile_image {
+          min-width: 50px;
+          width: 50px;
+          min-height: 50px;
+          height: 50px;
+          object-fit: cover;
+          object-position: center;
+          border-radius: 1rem;
+          border: 2px solid skyblue;
+          cursor: pointer;
+        }
+        span{
+          font-size: 0.7rem;
+          color: gray;
+          font-weight: bold;
+        }
+      }
+      input[type="file"] {
+        display: none;
+      }
+      @media screen and (max-width: 900px) {
+        margin: 0.8rem auto;
+      }
+    }
         .form_group {
           margin: 10px auto;
           display: flex;
