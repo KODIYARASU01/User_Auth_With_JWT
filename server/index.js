@@ -3,6 +3,9 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+
+//Routes Importing:
+import AuthRoutes from "./Routes/Register.route.js";
 //Configire DotEnv Configuration :
 dotenv.config();
 //App initialized :s
@@ -16,6 +19,8 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 let PORT = process.env.PORT || 3000;
 let mongodb_uri = process.env.MONGODB_CONNECTION_STRING;
 
+//All Routes:
+app.use("/auth", AuthRoutes);
 //Home route for server side only for demo purpose:
 app.get("/", (req, res) => {
   res.send("server is running Sucessfully");
